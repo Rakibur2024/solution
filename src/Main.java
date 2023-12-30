@@ -25,7 +25,15 @@ public class Main {
         fibonacciSeries(0,1,5);
         System.out.println();
         System.out.println(chkLeapYear(2001));
-        //secondLargest(arr);
+        duplicates();
+        System.out.println(celciusToFarenheit(20));
+        System.out.println(farenheitToCelcius(68));
+        secondLargest(arr);
+        System.out.println(simpleInterest(10000,5,2));
+        System.out.println(sumOfAllNumbers("12abc20yz68"));
+        chkCase('#');
+        isArmstrongNumber(153);
+        System.out.println(binarySearch(arr));
     }
 
     public static int arraySum(int[] array){
@@ -47,8 +55,14 @@ public class Main {
     }
 
     public static void secondLargest(int[] a){
-        Arrays.sort(a);
-        System.out.println(a[a.length-2]);
+        int largest = showLargest(a);
+        int secondLargest = 0;
+        for (int i=0;i<a.length;i++){
+            if(a[i] < largest && a[i]>=a[secondLargest]){
+                secondLargest = i;
+            }
+        }
+        System.out.println("Second Largest : " + a[secondLargest]);
     }
 
     public static String evenOdd(int n){
@@ -248,5 +262,99 @@ public class Main {
         } else {
             return y + " is not a leap year";
         }
+    }
+
+    public static void duplicates(){
+        int[] array = {1, 2, 3, 4, 2, 7, 8, 8, 3};
+        for (int i=0;i<array.length;i++){
+            for (int j=i+1;j<array.length;j++){
+                if (array[i]==array[j]){
+                    System.out.println(array[j]);
+                }
+            }
+        }
+    }
+
+    public static float celciusToFarenheit(float c){
+         return  (9*c)/5+32;
+    }
+
+    public static float farenheitToCelcius(float f){
+        return 5*(f-32)/9;
+    }
+
+    public static float simpleInterest(float p, float rateOfInterest, float time){
+        float simpleInterest = (p*rateOfInterest*time)/100;
+        return simpleInterest;
+    }
+
+    public static int sumOfAllNumbers(String str){
+        String temp ="0";
+        int sum = 0;
+        for (int i=0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if(Character.isDigit(ch)){
+                temp += ch;
+            } else {
+                sum += Integer.parseInt(temp);
+                temp = "0";
+            }
+        }
+        sum += Integer.parseInt(temp);
+        return sum;
+    }
+
+    public static void chkCase(char c){
+        if(c>='A' && c<='Z'){
+            System.out.println("Upper Case");
+        } else if(c>='a' && c<='z'){
+            System.out.println("Lower Case");
+        } else if(Character.isDigit(c)){
+            System.out.println("Number");
+        } else {
+            System.out.println("Special Character");
+        }
+    }
+
+    public static void isArmstrongNumber(int n){
+        String str = Integer.toString(n);
+        int armstrongSum = 0;
+        for (int i=0;i<str.length();i++){
+            int digit = Integer.parseInt(Character.toString(str.charAt(i)));
+//            System.out.print(digit);
+//            System.out.println(digit + "-" + Math.pow(digit, str.length()));
+            //System.out.println(armstrongSum + "-" + Math.pow(digit, str.length()));
+            armstrongSum += Math.pow(digit, str.length());
+        }
+        if(armstrongSum == n){
+            System.out.println("This is an Armstrong Numer");
+        } else {
+            System.out.println("This is not an Armstrong Numer");
+        }
+    }
+
+    public static int binarySearch(int[] arr){
+        Arrays.sort(arr);
+        int n = arr.length;
+        int x = 5;
+        int l = 0;
+        int r = arr.length-1;
+
+        for (int i=0;i<arr.length;i++){
+            System.out.print(arr[i] + " ");
+        }
+
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (arr[mid] == x) {
+                return mid;
+            } else if (arr[mid] > x) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        return -1;
     }
 }
